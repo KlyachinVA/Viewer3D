@@ -1,0 +1,102 @@
+# Blender 4.2.3 LTS MTL File: 'lux.blend'
+# www.blender.org
+
+newmtl Granite_Brown
+Ns 250.000000
+Ka 1.000000 1.000000 1.000000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.450000
+d 1.000000
+illum 2
+map_Kd /media/vladimir/DataDisk/3DStalingrad/Задания/Готовое/08-02-2021_14-25-42/kuxfinale/Granite_Brown.jpg
+
+newmtl Polished_Concrete_Old
+Ns 250.000000
+Ka 1.000000 1.000000 1.000000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.450000
+d 1.000000
+illum 2
+map_Kd /media/vladimir/DataDisk/3DStalingrad/Задания/Готовое/08-02-2021_14-25-42/kuxfinale/Polished_Concrete_Old.jpg
+
+newmtl Roofing_Slate_Dark
+Ns 250.000000
+Ka 1.000000 1.000000 1.000000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.450000
+d 1.000000
+illum 2
+map_Kd /media/vladimir/DataDisk/3DStalingrad/Задания/Готовое/08-02-2021_14-25-42/kuxfinale/Roofing_Slate_Dark.jpg
+
+newmtl Stone_Brushed_Khaki
+Ns 250.000000
+Ka 1.000000 1.000000 1.000000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.450000
+d 1.000000
+illum 2
+map_Kd /media/vladimir/DataDisk/3DStalingrad/Задания/Готовое/08-02-2021_14-25-42/kuxfinale/Stone_Brushed_Khaki.jpg
+
+newmtl Stone_Flagstone_Ashlar
+Ns 250.000000
+Ka 1.000000 1.000000 1.000000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.450000
+d 1.000000
+illum 2
+map_Kd /media/vladimir/DataDisk/3DStalingrad/Задания/Готовое/08-02-2021_14-25-42/kuxfinale/Stone_Flagstone_Ashlar.jpg
+
+newmtl Translucent_Glass_Blue
+Ns 1000.000000
+Ka 0.953488 0.953488 0.953488
+Kd 0.392157 0.584314 0.929412
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.450000
+d 0.501961
+illum 6
+
+newmtl Wood_Bamboo
+Ns 250.000000
+Ka 1.000000 1.000000 1.000000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.450000
+d 1.000000
+illum 2
+map_Kd /media/vladimir/DataDisk/3DStalingrad/Задания/Готовое/08-02-2021_14-25-42/kuxfinale/Wood_Bamboo.jpg
+
+newmtl Wood_Floor
+Ns 250.000000
+Ka 1.000000 1.000000 1.000000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.450000
+d 1.000000
+illum 2
+map_Kd /media/vladimir/DataDisk/3DStalingrad/Задания/Готовое/08-02-2021_14-25-42/kuxfinale/Wood_Floor.jpg
+
+newmtl Wood_Floor_Parquet
+Ns 250.000000
+Ka 1.000000 1.000000 1.000000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.450000
+d 1.000000
+illum 2
+map_Kd /media/vladimir/DataDisk/3DStalingrad/Задания/Готовое/08-02-2021_14-25-42/kuxfinale/Wood_Floor_Parquet.jpg
+
+newmtl edge_color1458939255
+Ns 250.000000
+Ka 1.000000 1.000000 1.000000
+Kd 0.800000 0.800000 0.800000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.450000
+d 1.000000
+illum 2

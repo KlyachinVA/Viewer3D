@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<title>Просмотр 3D  моделей</title>
+		<style>
+			h2{
+				color:#0099aa;
+				}
+			body { margin: 0; }
+			#viewport{
+				margin: 10px;
+				width : 900px;
+				height : 600px;
+				border: solid 2px #007788;
+				}
+			#viewport2{
+				margin: 10px;
+				width : 900px;
+				height : 600px;
+				border: solid 2px #007788;
+				}
+			#info{
+				position: absolute; 
+				width: 300px; 
+				display: none; 
+				//border: 1px solid #000; 
+				padding: 5px;
+				font-family: sans-serif; 
+				font-size: 14pt;
+				color: #333;  
+				background: #ffffff;    
+				border-radius: 10px;
+				opacity: 0.85; /* Прозрачность слоя */
+			}
+			#map3d{
+				width:50px;
+				height:50px;
+				background-color:#ffaa88;
+					
+					}
+			#map3d-2{
+				width:50px;
+				height:50px;
+				background-color:#aaff88;
+					
+					}
+		</style>
+	</head>
+	<script src="/static/js/utils/blocks.js"></script>
+	<script>
+	function close_info(id_window){
+			hide_block(id_window)
+	}
+	function show_dialog(id_view){
+		let el = document.getElementById(id_view)
+		el.style.display = "block"
+		}
+	function hide_dialog(id_view){
+		let el = document.getElementById(id_view)
+		el.style.display = "none"
+		}
+	function get_coords(ob){
+		let box = ob.getBoundingClientRect()
+		console.log(event.clientX-box.left, event.clientY - box.top)
+		//console.log(box)
+		}
+	</script>
+	<body>
+		<!--<script type="module">
+			import three from 'https://cdn.jsdelivr.net/npm/three@0.169.0/+esm'
+		</script>
+		-->
+	
+	<script type="importmap">
+  {
+    "imports": {
+      "three": "https://cdn.jsdelivr.net/npm/three@0.169.0/build/three.module.js",
+      "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.169.0/examples/jsm/"
+    }
+  }
+</script>
+		<script type="module" src="/static/js/main-view-test-5.js"></script>
+		<!--<script type="module" src="/static/js/main-test.js"></script>-->
+		
+		<!--<script type="module" src="/fbx.js"></script>-->
+		
+	<div align="center">
+		<h2>Просмотр 3D  моделей</h2>
+	</div>
+    <!--<img id="map2d" src="/static/images/map.png" onclick="get_coords(this)" width=400/>-->
+	<div id="map3d" onmouseenter="show_dialog('viewport')" ></div>
+
+	<div align="center">
+
+	<div id="viewport" style="display:none;">
+		<button onclick="hide_dialog('viewport')">X</button>
+		<!--<canvas id="view_port" width=500 height=500></canvas>-->
+	</div>
+	<div id="viewport2" style="display:none;">
+		<button onclick="hide_dialog('viewport2')">X</button>
+		<!--<canvas id="view_port" width=500 height=500></canvas>-->
+	</div>
+	
+		
+	<div id="info" style="display:none">
+		<button onclick="close_info('info')">X</button>
+		<h3>Информация об объекте</h3>
+	<p>
+		<img src="/static/images/kirha.png" width=100>
+	</p>	
+	</div>
+	<button id="run">RUN</button><button id="clear">CLEAR</button>
+
+	</body>
+</html>
