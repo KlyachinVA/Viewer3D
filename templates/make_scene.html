@@ -1,0 +1,17 @@
+{% extends 'base.html'%}
+{% block title %}
+Создание сцены
+{% endblock %}
+
+{% block header %}
+Создание 3D сцены
+{% endblock %}
+
+{% block content %}
+<form method="post" enctype="multipart/form-data">
+{% csrf_token %}
+{{ form.as_p }}
+<p>
+<input type="submit" value="Сохранить" />
+</form>
+{% endblock %}

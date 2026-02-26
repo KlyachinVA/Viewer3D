@@ -1,0 +1,37 @@
+{% extends 'base.html'%}
+{% block title %}
+Управление моделями
+{% endblock %}
+
+{% block header %}
+Управление моделями и 3D  сценами
+{% endblock %}
+
+{% block content %}
+<div id="start_menu">
+    <ul>
+        <li>
+            <a href="/manage/upload_model3d/">Загрузка 3D  моделей</a>
+        </li>
+        <li>
+            <a href="/manage/make_scene/">Создание 3D  сцены</a>
+        </li>
+        <li>
+            <a href="/manage/make_environment/">Добавление окружения</a>
+        </li>
+        <li>
+            <a href="/manage/upload_history_info/">Добавление исторической справки</a>
+        </li>
+        <li>
+            <a href="/manage/add_texture/">Добавление текстуры</a>
+        </li>
+        <li>
+            <a href="/show_scene/">3D просмотр</a>
+        </li>
+        <li>
+            <a href="/manage/scene_list/">Список 3D сцен </a>
+        </li>
+
+    </ul>
+</div>
+{% endblock %}

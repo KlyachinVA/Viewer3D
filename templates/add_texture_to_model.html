@@ -1,0 +1,29 @@
+{% extends 'base.html'%}
+{% block title %}
+Загрузка файла текстуры для 3D модели
+{% endblock %}
+
+{% block header %}
+Загрузка файла текстуры для 3D модели
+({{ model.name }})
+{% endblock %}
+
+{% block content %}
+<form method="post" enctype="multipart/form-data">
+{% csrf_token %}
+
+<p>
+    <label for="id_name">Название текстуры:</label>
+    <input type="text" name="name" maxlength="100" required id="id_name">
+</p>
+
+<p>
+    <input type="hidden" name="model3d" value="{{ model.id }}">
+</p>
+<p>
+    <label for="id_fname">Файл текстуры:</label>
+    <input type="file" name="fname" required id="id_fname"></p>
+<p>
+<input type="submit" value="Загрузить" />
+</form>
+{% endblock %}

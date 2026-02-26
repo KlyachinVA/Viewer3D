@@ -1,0 +1,50 @@
+<div class="Toolbar" align=center>
+        - Цвет -<br>
+        <img id="redPen" src="/static/toolbar/pen_red.gif" alt="Красная кисть" onclick="changeColor(212,21,29, this)" width=16 height=16>
+        <img id="greenPen" src="/static/toolbar/pen_green.gif" alt="Зеленая кисть" onclick="changeColor(131,190,61, this)" width=16 height=16>
+        <img id="bluePen" src="/static/toolbar/pen_blue.gif" alt="Синяя кисть" onclick="changeColor(0,86,166, this)" width=16 height=16>
+</div>
+<div class="Toolbar" align=middle>
+        - Толщина -<br>
+        <img src="/static/toolbar/pen_thin.gif" alt="Тонкая кисть" onclick="changeThickness(1, this)"  width=16 height=16>
+        <img src="/static/toolbar/pen_medium.gif" alt="Нормальная кисть" onclick="changeThickness(3, this)" width=16 height=16>
+        <img src="/static/toolbar/pen_thick.gif" alt="Толстая кисть" onclick="changeThickness(7, this)"  width=16 height=16>
+</div>
+
+<div class="CanvasContainer" >
+        <canvas id="drawingCanvas" width="700" height="400"></canvas>
+		<canvas id="smallmap" width=350 height=250></canvas>
+</div>
+
+<div class="Toolbar" >
+        - Операции -<br>
+        <button onclick="clearPolygon()">Очистить</button>
+        <!--<button onclick="moveIm(1,0)">Влево</button>
+		 <button onclick="moveIm(-1,0)"> Вправо </button>
+		 <button onclick="moveIm(0,-1)">Вниз</button>
+		 <button onclick="moveIm(0,1)">Вверх</button>-->
+		 <button onclick="closed()"> Закрасить выделенную область </button>
+
+		<form method='post' id="coords_form">
+            {% csrf_token %}
+		    <input type='hidden' name='Xcoords' value=''/>
+            <input type='hidden' name='Ycoords' value=''/>
+            <p>
+		        <select name="model3d" id="model3d">
+                {% for model in models %}
+                    <option value="{{ model.id }}">{{ model.name }}</option>
+                {% endfor %}
+                </select>
+            </p>
+		    <input type='submit' value='Отправить координаты на сервер'/>
+
+		</form>
+
+<p>
+
+<div id='footerinfo'>
+   © Научно-исследовательская лаборатория пространственного анализа данных, исторической реконструкции и моделирования
+</div>
+
+
+</div>

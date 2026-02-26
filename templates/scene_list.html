@@ -1,0 +1,23 @@
+{% extends 'base.html'%}
+{% block title %}
+Список 3D  сцен
+{% endblock %}
+
+{% block header %}
+Список 3D  сцен
+{% endblock %}
+
+{% block content %}
+{% for scene in scenes %}
+<p>
+<a href="/manage/model_list/{{ scene.id }}">
+    {{ scene.name }}
+</a>
+</p>
+<p>
+    <a href="/manage/set_position/{{ scene.id }}">
+        <button>Разместить на сцене модели</button>
+    </a>
+</p>
+{% endfor %}
+{% endblock %}

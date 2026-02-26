@@ -16,8 +16,8 @@ function run(){
 	
 	
 	let objmodels = [[
-							{path:'/static/models/buildings/circ3.obj',
-							mtlpath:'/static/models/buildings/circ3.mtl',
+							{path:'/static/models/buildings/circ4.obj',
+							mtlpath:'/static/models/buildings/circ4.mtl',
 							scale:[2.7,2.7,2.7],
 							position:[8,4,-2],
 							rotation:[0,3.14,0]

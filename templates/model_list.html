@@ -1,0 +1,24 @@
+{% extends 'base.html'%}
+{% block title %}
+Список моделей 3D  сцены
+{% endblock %}
+
+{% block header %}
+Список моделей 3D  сцены
+({{ scene.name }})
+{% endblock %}
+
+{% block content %}
+{% for model in models3d %}
+<p>
+<a href="/manage/add_history_info/{{ model.id }}">
+    {{ model.name }}
+</a>
+</p>
+<p>
+    <a href="/manage/add_texture_to_model/{{ model.id }}">
+        <button>Добавить текстуру</button>
+    </a>
+</p>
+{% endfor %}
+{% endblock %}

@@ -1,0 +1,24 @@
+{% extends 'base.html'%}
+{% block title %}
+Загрузка информации исторического характера
+{% endblock %}
+
+{% block header %}
+Загрузка информации исторического характера
+{% endblock %}
+
+{% block content %}
+<form method="post" enctype="multipart/form-data">
+{% csrf_token %}
+<p>
+    <label for="id_title">Заголовок:</label>
+    <input type="text" name="title" maxlength="150" required id="id_title">
+</p>
+<p>
+    <input type="hidden" name="model3d" value="{{ model.id }}"/>
+</p>
+<p><label for="id_fname_info">Файл html  с исторической справкой:</label> <input type="file" name="fname_info" required id="id_fname_info"></p>
+<p>
+<input type="submit" value="Загрузить" />
+</form>
+{% endblock %}

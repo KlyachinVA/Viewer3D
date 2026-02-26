@@ -1,0 +1,17 @@
+{% extends 'base.html'%}
+{% block title %}
+Загрузка информации исторического характера
+{% endblock %}
+
+{% block header %}
+Загрузка информации исторического характера
+{% endblock %}
+
+{% block content %}
+<form method="post" enctype="multipart/form-data">
+{% csrf_token %}
+{{ form.as_p }}
+<p>
+<input type="submit" value="Загрузить" />
+</form>
+{% endblock %}

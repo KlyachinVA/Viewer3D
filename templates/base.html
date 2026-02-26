@@ -2,9 +2,20 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>
+        {% block title %}{% endblock %}
+    </title>
+    {% block cssinclude %}{% endblock %}
 </head>
+{% block jscode %}{% endblock %}
 <body>
+<a href="/">Главная</a>
+<h4>
+    {% block header %}{% endblock %}
+</h4>
+<div id="content">
+    {% block content %}{% endblock %}
+</div>
 
 </body>
 </html>

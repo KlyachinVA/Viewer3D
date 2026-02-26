@@ -1,0 +1,24 @@
+{% extends 'base.html'%}
+{% block cssinclude %}
+<link rel='stylesheet' href='/static/css/toolbar.css' />
+<link rel="stylesheet" href="/static/css/main.css"/>
+{% endblock %}
+{% block jscode %}
+<script src = "/static/js/pos_models.js"></script>
+{% endblock %}
+{% block title %}
+Размещение моделей
+{% endblock %}
+
+{% block header %}
+Размещение моделей на 3D  сцене
+({{ scene.name }})
+{% endblock %}
+
+{% block content %}
+<div  style="display:none">
+    <img id="map" src="{{ url_map }}">
+</div>
+{% include 'toolbar.html' %}
+
+{% endblock %}
