@@ -1,7 +1,8 @@
 import { show, hide} from '/static/js/utils/windows.js'
 
-export function loadObjModel( mtlloader,objloader, scene,data ,i,N,element,id_element) {
+export async function loadObjModel( mtlloader,objloader, scene,data ,i,N,element,id_element) {
 				console.log(data.mtlpath)
+				/*
 				mtlloader.load(data.mtlpath, (mtl) => {
 						mtl.preload();
 						objloader.setMaterials(mtl);
@@ -17,6 +18,15 @@ export function loadObjModel( mtlloader,objloader, scene,data ,i,N,element,id_el
 								}
 
 							} );
+					*/
+
+				const materials = await mtlloader.loadAsync(data.mtlpath);
+				materials.preload();
+
+
+				objloader.setMaterials( materials ); // optional since OBJ assets can be loaded without an accompanying MTL file
+
+				const object = await objloader.loadAsync( data.path );
 							
 					object.position.set(data.position[0],data.position[1],data.position[2])
 					object.rotation.set(data.rotation[0],data.rotation[1],data.rotation[2])
@@ -39,9 +49,9 @@ export function loadObjModel( mtlloader,objloader, scene,data ,i,N,element,id_el
 					
 				}
 
-				} );
+				/*} );
 				
 				
 			})
-			
+			*/
 		}

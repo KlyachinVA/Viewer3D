@@ -1,0 +1,46 @@
+{
+"objmodels":[[
+							{
+							"path":"/static/models/buildings/hotel.obj",
+							"mtlpath":"/static/models/buildings/hotel.mtl",
+							"scale":[3.5,3.5,3.5],
+							"position":[-4,0,0],
+							"rotation":[0,3.14,0]
+							},
+							{"path":"/static/models/buildings/kirha.obj",
+							"mtlpath":"/static/models/buildings/kirha.mtl",
+							"scale":[2.7,2.7,2.7],
+							"position":[8,0,0],
+							"rotation":[0,3.14,0]
+							}
+							
+							],
+							[
+							{
+							"path":"/static/models/buildings/hotel.obj",
+							"mtlpath":"/static/models/buildings/hotel.mtl",	
+							"scale":[3.5,3.5,3.5],
+							"position":[-4,0,0],
+							"rotation":[0,3.14,0]
+							}
+							],
+							[
+							{
+							"path":"/static/models/buildings/cylinder.obj",
+							"mtlpath":"/static/models/buildings/cylinder.mtl",
+							"scale":[3.5,3.5,3.5],
+							"position":[-4,4,0],
+							"rotation":[0,3.14,0]
+							}
+							]],
+
+"houses":[
+
+{"z1":15.72, "x1":-13.71, "z2":15.72, "x2":-3.85, "z3":-0.40, "x3":-3.85, "z4":-4.0, "x4":-13.71, "H":10.0},
+
+{"z1":24.72, "x1":-0.91, "z2":24.72, "x2":17.1, "z3":-24.72, "x3":17.1, "z4":-24.72, "x4":-0.91, "H":40.2}
+
+],
+
+"path": [[0,-80], [-53.5,-46.9], [-49.4, 20.9], [24.7, 60.0], [49.3, -22.2], [0,-80]]
+}

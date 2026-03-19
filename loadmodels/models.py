@@ -17,6 +17,8 @@ class Scene(models.Model):
                                  verbose_name="Файл изображения карты",
                                  default="blank_map.png")
 
+    scale = models.FloatField(verbose_name="Масштаб - отношение истинного расстояния к пиксельному", default=1)
+
     def __str__(self):
         return self.name
 
@@ -73,6 +75,7 @@ class Polygon(models.Model):
 
     X = models.CharField(max_length=200)
     Y = models.CharField(max_length=200)
+    color = models.CharField(max_length=200,default="rgb(255,0,0,1.0)")
 
 
 class Position(models.Model):

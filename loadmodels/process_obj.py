@@ -1,7 +1,7 @@
 import numpy as np
 
 def extract_geometry(fname):
-
+    print(fname)
     f = open(fname)
     lines = f.readlines()
     f.close()

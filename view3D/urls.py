@@ -17,11 +17,13 @@ from django.contrib import admin
 from django.urls import path, re_path
 from loadmodels.views import main, upload_model3d, make_scene, make_envir,\
     upload_history_info, add_texture,show_start_menu, scene_list,\
-    model_list, add_history_info, add_texture_to_model, set_position
+    model_list, add_history_info, add_texture_to_model, set_position,\
+    view_scene
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('show_scene/',main),
+    re_path('view_scene/([0-9]+)',view_scene),
     path('',show_start_menu),
     path('manage/upload_model3d/',upload_model3d),
     path('manage/make_scene/',make_scene),

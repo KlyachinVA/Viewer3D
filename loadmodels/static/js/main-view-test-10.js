@@ -16,10 +16,17 @@ function run(){
 	
 	
 	let objmodels = [[
-							{path:'/static/models/buildings/circ4.obj',
-							mtlpath:'/static/models/buildings/circ4.mtl',
-							scale:[2.7,2.7,2.7],
-							position:[8,4,-2],
+							{path:'/static/models/buildings/building.obj',
+							mtlpath:'/static/models/buildings/building.mtl',
+							scale:[1.0,1.0,1.0],
+							position:[0,0,0],
+							rotation:[0,3.14,0]
+							},
+							{
+							path:'/static/models/buildings/hotel.obj',
+							mtlpath:'/static/models/buildings/hotel.mtl',
+							scale:[3.5,3.5,3.5],
+							position:[-4,0,0],
 							rotation:[0,3.14,0]
 							}
 							],
@@ -75,7 +82,7 @@ function run(){
 							*/
 
 							]
-	cur = cur % objmodels.length
+	cur = 0//cur % objmodels.length
 	vp.init(objmodels[cur],{color:"#ffffff",z_distance:70,ambient_light:false,fov:25})
 	//vp.init(fbxmodels,{color:"#ffffff",z_distance:70,ambient_light:false,fov:25})
 	

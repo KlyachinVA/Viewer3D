@@ -34,7 +34,7 @@ let coords='';
 let geocor=[];
 let img
 let previousColorElement;
-let data = []
+//let data = []
 let curModelIndex = 0
 let previousThicknessElement;
 let drawn = false
@@ -75,14 +75,15 @@ window.onload = function() {
 		AX[curpolygon]=new Array();
 		AY[curpolygon]=new Array();
 	  }
-	  redraw();
+
 	  set_keyboard_handlers()
 	  init_data()
+	  redraw();
    }
 
 function init_data(){
     let el = document.getElementById("model3d")
-    let opts = el.options
+    /*let opts = el.options
     let num_opts = opts.length
 
     for(let i = 0; i < num_opts; i++ ){
@@ -97,6 +98,7 @@ function init_data(){
         data.push(model_data)
     }
     console.log(data)
+    */
     el.addEventListener('change',event => {
         let ind = el.selectedIndex
 
@@ -187,6 +189,7 @@ function closed(){
 	let f=document.getElementById("coords_form");
 	f.Xcoords.value=Xcor;
 	f.Ycoords.value=Ycor
+	f.color.value = color
 	//curpolygon+=1;
 	//AX.push(new Array());
 	//AY.push(new Array());
@@ -235,6 +238,7 @@ function clearPolygon(){
 	let f=document.getElementById("coords_form");
 	f.Xcoords.value=''
 	f.Ycoords.value=''
+	f.color = ''
 }
 
 function clearCanvas() {

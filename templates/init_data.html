@@ -1,0 +1,21 @@
+let data = [
+{% for model in models %}
+{
+    id : {{ model.model.id }},
+    name : '{{ model.model.name }}',
+    color : '{{ model.color }}',
+    drawn : {{ model.drawn }},
+
+    X : [
+            {% for x in model.X %}
+                {{ x }},
+            {% endfor %}
+        ],
+    Y : [
+            {% for y in model.Y %}
+                {{ y }},
+            {% endfor %}
+        ]
+},
+{% endfor %}
+]

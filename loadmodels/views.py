@@ -6,12 +6,18 @@ from loadmodels.forms import UploadModelForm, MakeSceneForm, MakeEnvirForm, Hist
 from loadmodels.models import Model3D, Scene, Model3DSize, Polygon
 from loadmodels.process_obj import calc_box3d
 # Create your views here.
-
-
+import json
+import numpy as np
+from view3D.settings import PATH_JSON
 def main(req):
 	html = render(req,"index.html")
 	return HttpResponse(html)
 
+def view_scene(req,id_scene):
+    id_scene = int(id_scene)
+    scene = Scene.objects.get(id=id_scene)
+    html = render(req,"view_scene.html",{"scene":scene})
+    return HttpResponse(html)
 def show_start_menu(req):
     html = render(req,"main.html")
     return HttpResponse(html)
@@ -27,14 +33,41 @@ def upload_model3d(req):
         if upload_form.is_valid():
             upload_form.save()
             url = upload_form.instance.fname.url
+            fname = upload_form.instance.fname.name
+            # print(fname)
+            fname_json = PATH_JSON  + upload_form.instance.scene.fname_json
+
+            data_scene = json.load(open(fname_json))
+            objmodels = data_scene["objmodels"]
+            # print(objmodels)
+
+
+
             model3d = upload_form.instance
-            fname = url[1:]
+            fname_url = model3d.fname.url
+            fname_mtl_url = model3d.fname_mtl.url
+            fname_url = "/" + "/".join(fname_url.split("/")[2:])
+            fname_mtl_url = "/" + "/".join(fname_mtl_url.split("/")[2:])
+            data_model = {
+                "id":model3d.id,
+                "path" : fname_url,
+                "mtlpath" : fname_mtl_url,
+                "scale": [1.0,1.0,1.0],
+                "position": [0, 0, 0],
+                "rotation": [0, 3.14, 0]
+            }
+
+            objmodels.append(data_model)
+
+            json.dump(data_scene,open(fname_json,"w"))
+            # fname = url[1:]
             box = calc_box3d(fname)
             model_size = Model3DSize(model3d=model3d,
                                      xmin=box[0],xmax=box[1],ymin=box[2],ymax=box[3],
                                      zmin=box[4],zmax=box[5],
                                      length=box[6],width=box[7],height=box[8])
             model_size.save()
+
             return HttpResponseRedirect("/manage/upload_model3d/")
             # name = upload_form.cleaned_data["name"]
             # fname = upload_form.cleaned_data["fname"]
@@ -52,6 +85,10 @@ def make_scene(req):
     else:
         scene_form = MakeSceneForm(req.POST,req.FILES)
         if scene_form.is_valid():
+            fname_json = str(PATH_JSON) + scene_form.instance.fname_json
+
+            data = {"objmodels":[]}
+            json.dump(data,open(fname_json,"w"))
             scene_form.save()
             return HttpResponseRedirect("/manage/make_scene/")
 
@@ -135,9 +172,30 @@ def set_position(req,id_scene):
     if req.method == "GET":
         id_scene = int(id_scene)
         scene = Scene.objects.get(id=id_scene)
+
         url_map = "/" + "/".join(scene.map_image.url.split("/")[-4:])
         models3d = Model3D.objects.filter(scene=scene)
-        html = render(req,"set_position.html",{"scene":scene,"models":models3d,"url_map":url_map})
+        models_data = []
+        for model3d in models3d:
+            polygon = Polygon.objects.filter(scene=scene,model3d=model3d)
+            XX = []
+            YY = []
+            drawn = 'false'
+            color = 'red'
+            if len(polygon)>0:
+                XX = polygon[0].X.split(":")
+
+                YY = polygon[0].Y.split(":")
+                drawn = 'true'
+                color = polygon[0].color
+
+            models_data.append({'model':model3d,
+                                'X':XX,
+                                'Y':YY,
+                                'drawn':drawn,
+                                'color':color})
+
+        html = render(req,"set_position.html",{"scene":scene,"models":models_data,"url_map":url_map})
         return HttpResponse(html)
     else:
         id_scene = int(id_scene)
@@ -146,8 +204,46 @@ def set_position(req,id_scene):
         model3d = Model3D.objects.get(id=id_model)
         Xcor = req.POST["Xcoords"]
         Ycor = req.POST["Ycoords"]
-        poly = Polygon(scene=scene,model3d=model3d,X=Xcor,Y=Ycor)
+        color = req.POST["color"]
+        polys = Polygon.objects.filter(scene=scene,model3d=model3d)
+        if len(polys) > 0:
+            poly = polys[0]
+            poly.X = Xcor
+            poly.Y = Ycor
+            poly.color = color
+        else:
+            poly = Polygon(scene=scene,model3d=model3d,X=Xcor,Y=Ycor,color=color)
         poly.save()
+
+        XX = Xcor.split(":")
+        YY = Ycor.split(":")
+        X = []
+        Y = []
+        for i in range(len(XX)):
+            X.append(int(XX[i]))
+            Y.append(int(YY[i]))
+
+        X = np.array(X)
+        Y = np.array(Y)
+
+        cx = X.mean()
+        cy = Y.mean()
+        scale = scene.scale
+        cx *= scale
+        cy *= scale
+
+        url = model3d.fname.url
+        fname_json = PATH_JSON + scene.fname_json
+
+        data_scene = json.load(open(fname_json))
+        objmodels = data_scene["objmodels"]
+
+        for i in range(len(objmodels)):
+            if objmodels[i]["id"] == model3d.id:
+                data_model = objmodels[i]
+                data_model["position"] = [cx,0,cy]
+                break
+        json.dump(data_scene,open(fname_json,"w"))
 
         return HttpResponseRedirect("/manage/set_position/" + str(id_scene))
 
