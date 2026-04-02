@@ -8,6 +8,7 @@
 {% endblock %}
 
 {% block content %}
+<div class="imit-forms">
 {% for scene in scenes %}
 <p>
 <a href="/manage/model_list/{{ scene.id }}">
@@ -20,4 +21,5 @@
     </a>
 </p>
 {% endfor %}
+</div>
 {% endblock %}

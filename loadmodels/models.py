@@ -25,8 +25,8 @@ class Scene(models.Model):
 
 class Model3D(models.Model):
     name = models.CharField(max_length=100, verbose_name="Название модели")
-    fname = models.FileField(upload_to="loadmodels/static/models",verbose_name="Файл модели")
-    fname_mtl = models.FileField(upload_to="loadmodels/static/models",verbose_name="Файл с материалами модели")
+    fname = models.FileField(upload_to="loadmodels/static/models",verbose_name="Файл модели (OBJ)")
+    fname_mtl = models.FileField(upload_to="loadmodels/static/models",verbose_name="Файл с материалами модели (MTL)")
     height =  models.IntegerField(verbose_name="Высота объекта, м")
     descr = models.CharField(max_length=300,verbose_name="Краткое описание модели")
     scene = models.ForeignKey(Scene,on_delete=models.CASCADE,default=1,verbose_name="3D сцена")

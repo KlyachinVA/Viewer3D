@@ -8,11 +8,42 @@
 {% endblock %}
 
 {% block content %}
-<form method="post" enctype="multipart/form-data">
-{% csrf_token %}
-{{ form.as_p }}
-<p>
-<input type="submit" value="Загрузить" />
-</form>
+<div class="imit-forms">
+    <form method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    <!--{{ form.as_p }}-->
+        <table>
+            <tr>
+                <td>{{ form.name.label_tag }}</td>
+                <td>{{ form.name }}</td>
+            </tr>
+            <tr>
+                <td>{{ form.fname.label_tag }}</td>
+                <td>{{ form.fname }}</td>
+            </tr>
+            <tr>
+                <td>{{ form.fname_mtl.label_tag }}</td>
+                <td>{{ form.fname_mtl }}</td>
+            </tr>
+            <tr>
+                <td>{{ form.height.label_tag }}</td>
+                <td>{{ form.height }}</td>
+            </tr>
+            <tr>
+                <td>{{ form.descr.label_tag }}</td>
+                <td>{{ form.descr }}</td>
+            </tr>
+            <tr>
+                <td>{{ form.scene.label_tag }}</td>
+                <td>{{ form.scene }}</td>
+            </tr>
+
+        </table>
+    <p>
+    <input type="submit" value="Загрузить" />
+    </p>
+    </form>
+
+</div>
 {% endblock %}
 

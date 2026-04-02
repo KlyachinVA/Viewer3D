@@ -9,6 +9,7 @@
 {% endblock %}
 
 {% block content %}
+<div class="imit-forms">
 {% for model in models3d %}
 <p>
 <a href="/manage/add_history_info/{{ model.id }}">
@@ -21,4 +22,5 @@
     </a>
 </p>
 {% endfor %}
+</div>
 {% endblock %}

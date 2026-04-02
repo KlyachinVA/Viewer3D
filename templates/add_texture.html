@@ -8,10 +8,12 @@
 {% endblock %}
 
 {% block content %}
+<div class="imit-forms">
 <form method="post" enctype="multipart/form-data">
 {% csrf_token %}
 {{ form.as_p }}
 <p>
 <input type="submit" value="Загрузить" />
 </form>
+</div>
 {% endblock %}
