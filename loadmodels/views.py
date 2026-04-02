@@ -247,4 +247,14 @@ def set_position(req,id_scene):
 
         return HttpResponseRedirect("/manage/set_position/" + str(id_scene))
 
+def get_json_data(req,fname):
+    fname += ".json"
+    path = PATH_JSON + fname
+    f = open(path)
+    data = f.read()
+    # print(data)
+    f.close()
+    return HttpResponse(data, content_type="text/json", charset='utf8')
+
+
 

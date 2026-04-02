@@ -18,7 +18,7 @@ from django.urls import path, re_path
 from loadmodels.views import main, upload_model3d, make_scene, make_envir,\
     upload_history_info, add_texture,show_start_menu, scene_list,\
     model_list, add_history_info, add_texture_to_model, set_position,\
-    view_scene
+    view_scene, get_json_data
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -31,6 +31,7 @@ urlpatterns = [
     path('manage/upload_history_info/',upload_history_info),
     path('manage/add_texture/',add_texture),
     path('manage/scene_list/',scene_list),
+    re_path('get_json_data/([a-z]+)',get_json_data),
     re_path('manage/model_list/([0-9]+)',model_list),
     re_path('manage/add_history_info/([0-9]+)',add_history_info),
     re_path('manage/add_texture_to_model/([0-9]+)',add_texture_to_model),

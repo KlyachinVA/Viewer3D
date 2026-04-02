@@ -3,6 +3,8 @@
 	<head>
 		<meta charset="utf-8">
 		<title>Просмотр 3D  моделей</title>
+        <link href="/static/css/menu.css" rel="stylesheet">
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css">
 		<style>
 			h2{
 				color:#0099aa;
@@ -107,7 +109,7 @@
 		)
 		}
 	</script>
-	<body>
+	<body onload="show_dialog('viewport')">
 		<!--<script type="module">
 			import three from 'https://cdn.jsdelivr.net/npm/three@0.169.0/+esm'
 		</script>
@@ -125,7 +127,7 @@
 		<!--<script type="module" src="/static/js/main-test.js"></script>-->
 
 		<!--<script type="module" src="/fbx.js"></script>-->
-    <a href="/">Главная</a>
+    <a href="/"><i class="fas fa-home icon"></i></a>
 	<div align="center">
 		<h2>Просмотр 3D  моделей</h2>
 		<button id="run">ЗАГРУЗИТЬ</button>
@@ -133,12 +135,12 @@
 		<button id="btn_start">СТАРТ</button>
 	</div>
     <!--<img id="map2d" src="/static/images/map.png" onclick="get_coords(this)" width=400/>-->
-	<div id="map3d" onmouseenter="show_dialog('viewport')" ></div>
+	<!--<div id="map3d" onmouseenter="show_dialog('viewport')" ></div>-->
 
 	<div align="center">
 
 	<div id="viewport" style="display:none;">
-		<button onclick="hide_dialog('viewport')">X</button>
+		<!--<button onclick="hide_dialog('viewport')">X</button>-->
 
 		<!--<canvas id="view_port" width=500 height=500></canvas>-->
 	</div>

@@ -16,7 +16,9 @@ export class ViewPort{
 		this.obj_models;
 		this.map_json;
 		this.path;
-		fetch("/static/models/scenes/" + fname_json)
+		fname_json = fname_json.split(".")[0]
+		let json_url = "get_json_data/" + fname_json // "/static/models/scenes/" + fname_json
+		fetch(json_url)
 		.then(response => response.json())
 		.then(jsonData3 =>  {this.obj_models = jsonData3["objmodels"]; this.map_json=jsonData3["houses"]; this.path=jsonData3["path"]});
 			

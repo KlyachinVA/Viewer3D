@@ -5,17 +5,35 @@
     <title>
         {% block title %}{% endblock %}
     </title>
-    {% block cssinclude %}{% endblock %}
+{% block cssinclude %}
+    <link href="/static/css/menu.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css">
+{% endblock %}
 </head>
 {% block jscode %}{% endblock %}
 <body>
-<a href="/">Главная</a>
+<!--<a href="/">Главная</a>-->
 <h4>
     {% block header %}{% endblock %}
 </h4>
-<div id="content">
-    {% block content %}{% endblock %}
-</div>
+<table>
+    <tr>
+        <td>
+            {% block menu %}
+            {% include 'menu.html' %}
+            {% endblock%}
+        </td>
+        <td>
+            <div id="content">
+            {% block content %}
+                <img src="/static/images/landscape-city.jpg">
+            {% endblock %}
+            </div>
+        </td>
+    </tr>
+</table>
+
+
 
 </body>
 </html>
