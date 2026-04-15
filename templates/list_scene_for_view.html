@@ -1,0 +1,21 @@
+{% extends 'base.html'%}
+{% block title %}
+Список 3D  сцен
+{% endblock %}
+
+{% block header %}
+<h2 align="center">Список 3D  сцен</h2>
+{% endblock %}
+
+{% block content %}
+<div class="imit-forms">
+{% for scene in scenes %}
+<p>
+<a href="/view_scene/{{ scene.id }}">
+    {{ scene.name }}
+</a>
+</p>
+
+{% endfor %}
+</div>
+{% endblock %}

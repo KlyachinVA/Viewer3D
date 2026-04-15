@@ -11,7 +11,7 @@ class Environment(models.Model):
 
 class Scene(models.Model):
     name = models.CharField(max_length=100, verbose_name="Название сцены")
-    envir = models.ForeignKey(Environment,on_delete=models.CASCADE)
+    envir = models.ForeignKey(Environment,on_delete=models.CASCADE, verbose_name="Окружение")
     fname_json = models.CharField(max_length=100,verbose_name="Название файла JSON")
     map_image = models.FileField(upload_to="loadmodels/static/images/maps/",
                                  verbose_name="Файл изображения карты",

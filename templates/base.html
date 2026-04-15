@@ -12,6 +12,7 @@
 {% endblock %}
 </head>
 {% block jscode %}{% endblock %}
+<!--<body  id="content">-->
 <body>
 <!--<a href="/">Главная</a>-->
 <h4>
@@ -24,17 +25,17 @@
             {% include 'menu.html' %}
             {% endblock%}
         </td>
-        <td>
-            <div id="content">
+        <td >
+            <div >
             {% block content %}
-                <img src="/static/images/landscape-city.jpg">
+                <img src="/static/images/landscape-city-7.jpg">
             {% endblock %}
             </div>
         </td>
     </tr>
 </table>
 
-
+{% block locate %}{% endblock %}
 
 </body>
 </html>

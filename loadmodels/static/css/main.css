@@ -14,7 +14,20 @@ h4{
 
 }
 
+.imit-forms button{
+    background-color : #eeeeee;
+    color : #323232;
+    font-size : 1.0em;
+    border-radius: 7px 7px;
+}
 .imit-forms a{
     color : white;
     font-size : 1.2em;
+}
+
+#content{
+    background-image : url("../images/landscape-city-7.jpg");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
 }

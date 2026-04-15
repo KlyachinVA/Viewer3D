@@ -4,7 +4,7 @@
 {% endblock %}
 
 {% block header %}
-Загрузка файла текстуры для 3D модели
+<h2 align="center">Загрузка файла текстуры для 3D модели</h2>
 {% endblock %}
 
 {% block content %}
@@ -13,7 +13,8 @@
 {% csrf_token %}
 {{ form.as_p }}
 <p>
-<input type="submit" value="Загрузить" />
+<!--<input type="submit" value="Загрузить" />-->
+    <button>Загрузить</button>
 </form>
 </div>
 {% endblock %}

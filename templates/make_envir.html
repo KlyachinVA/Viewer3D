@@ -4,7 +4,7 @@
 {% endblock %}
 
 {% block header %}
-Создание окружения для 3D сцены
+<h2 align="center">Создание окружения для 3D сцены</h2>
 {% endblock %}
 
 {% block content %}
@@ -13,7 +13,8 @@
 {% csrf_token %}
 {{ form.as_p }}
 <p>
-<input type="submit" value="Сохранить" />
+<!--<input type="submit" value="Сохранить" />-->
+    <button>Сохранить</button>
 </form>
 </div>
 {% endblock %}

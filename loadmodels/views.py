@@ -1,9 +1,11 @@
+import re
+
 from django.shortcuts import render
 from django.http import HttpResponse, HttpResponseRedirect
 from django.contrib.auth.decorators import login_required
 from loadmodels.forms import UploadModelForm, MakeSceneForm, MakeEnvirForm, HistoryInfoForm,\
     AddTextureForm
-from loadmodels.models import Model3D, Scene, Model3DSize, Polygon
+from loadmodels.models import Model3D, Scene, Model3DSize, Polygon, HistoryInfo
 from loadmodels.process_obj import calc_box3d
 # Create your views here.
 import json
@@ -39,6 +41,7 @@ def upload_model3d(req):
 
             data_scene = json.load(open(fname_json))
             objmodels = data_scene["objmodels"]
+            houses = data_scene["houses"]
             # print(objmodels)
 
 
@@ -58,6 +61,7 @@ def upload_model3d(req):
             }
 
             objmodels.append(data_model)
+            houses.append({})
 
             json.dump(data_scene,open(fname_json,"w"))
             # fname = url[1:]
@@ -87,7 +91,7 @@ def make_scene(req):
         if scene_form.is_valid():
             fname_json = str(PATH_JSON) + scene_form.instance.fname_json
 
-            data = {"objmodels":[]}
+            data = {"objmodels":[],"houses":[]}
             json.dump(data,open(fname_json,"w"))
             scene_form.save()
             return HttpResponseRedirect("/manage/make_scene/")
@@ -126,6 +130,10 @@ def add_texture(req):
             texture_form.save()
             return HttpResponseRedirect("/manage/add_texture/")
 
+def list_scene_for_view(req):
+    scenes = Scene.objects.all()
+    html = render(req, "list_scene_for_view.html", {"scenes": scenes})
+    return HttpResponse(html)
 
 def scene_list(req):
     scenes = Scene.objects.all()
@@ -158,6 +166,7 @@ def add_history_info(req,id_model):
 def add_texture_to_model(req,id_model):
     id_model = int(id_model)
     model3d = Model3D.objects.get(id=id_model)
+    rx = re.compile(r"/(.*?\.[a-z]+)")
     if req.method == "GET":
         texture_form = AddTextureForm()
         html = render(req, "add_texture_to_model.html", {"form": texture_form,"model":model3d})
@@ -165,6 +174,11 @@ def add_texture_to_model(req,id_model):
     else:
         texture_form = AddTextureForm(req.POST, req.FILES)
         if texture_form.is_valid():
+            print("Save texture")
+            fname_mtl = model3d.fname_mtl
+            f = open(fname_mtl,"r")
+            mtl = f.read()
+
             texture_form.save()
             return HttpResponseRedirect("/")
 
@@ -202,6 +216,9 @@ def set_position(req,id_scene):
         scene = Scene.objects.get(id=id_scene)
         id_model = int(req.POST["model3d"])
         model3d = Model3D.objects.get(id=id_model)
+        box3d = Model3DSize.objects.filter(model3d=model3d)[0]
+        L = box3d.length
+        Ws = box3d.height
         Xcor = req.POST["Xcoords"]
         Ycor = req.POST["Ycoords"]
         color = req.POST["color"]
@@ -225,25 +242,73 @@ def set_position(req,id_scene):
 
         X = np.array(X)
         Y = np.array(Y)
+        W = 1000
+        H = 620
+        cx = (X - W/2).mean()
+        cy = (Y - H/2).mean()
 
-        cx = X.mean()
-        cy = Y.mean()
         scale = scene.scale
+
+        # maxx = X.max() * scale
+        # minx = X.min() * scale
+        # maxy = Y.max() * scale
+        # miny = Y.min() * scale
+        x1 = (X[0] - W/2)* scale
+        x2 = (X[1] - W/2)* scale
+        x3 = (X[2] - W/2)* scale
+        x4 = (X[3] - W/2)* scale
+        z1 = (Y[0] - H/2)* scale
+        z2 = (Y[1] - H/2)* scale
+        z3 = (Y[2] - H/2)* scale
+        z4 = (Y[3] - H/2)* scale
+
+        # print(x1,x2,x3,x4,z1,z2,z3,z4)
+
         cx *= scale
         cy *= scale
 
+        dx = max(x1,x2,x3,x4) - min(x1,x2,x3,x4)
+        dz = max(z1,z2,z3,z4) - min(z1,z2,z3,z4)
+        kx = L/dx
+        kz = Ws/dz
+
+        x1 = (x1 - cx) * kx + cx
+        x2 = (x2 - cx) * kx + cx
+        x3 = (x3 - cx) * kx + cx
+        x4 = (x4 - cx) * kx + cx
+        z1 = (z1 - cy) * kz + cy
+        z2 = (z2 - cy) * kz + cy
+        z3 = (z3 - cy) * kz + cy
+        z4 = (z4 - cy) * kz + cy
+
         url = model3d.fname.url
         fname_json = PATH_JSON + scene.fname_json
+        print(fname_json)
 
         data_scene = json.load(open(fname_json))
         objmodels = data_scene["objmodels"]
+        houses = []
 
         for i in range(len(objmodels)):
             if objmodels[i]["id"] == model3d.id:
                 data_model = objmodels[i]
                 data_model["position"] = [cx,0,cy]
+                data_model["rect"] = {"z1": z1, "x1": x1,
+                                      "z2": z2, "x2": x2,
+                                      "z3": z3, "x3": x3,
+                                      "z4": z4, "x4": x4, "H": 10.0}
+                # data_model["rect"] = {"z1": maxy, "x1": minx,
+                #                       "z2": maxy, "x2": maxx,
+                #                       "z3": miny, "x3": maxx,
+                #                       "z4": miny, "x4": minx, "H": 10.0}
                 break
-        json.dump(data_scene,open(fname_json,"w"))
+        for i in range(len(objmodels)):
+            if "rect" in objmodels[i]:
+                houses.append(objmodels[i]["rect"])
+            else:
+                houses.append({})
+        data_scene["houses"] = houses
+        json.dump(data_scene,open(fname_json,"w"),ensure_ascii=False)
 
         return HttpResponseRedirect("/manage/set_position/" + str(id_scene))
 
@@ -255,6 +320,53 @@ def get_json_data(req,fname):
     # print(data)
     f.close()
     return HttpResponse(data, content_type="text/json", charset='utf8')
+
+def get_history_info(req,id_model):
+    id_model = int(id_model)
+    model3d = Model3D.objects.get(id=id_model)
+    history_info = HistoryInfo.objects.filter(model3d=model3d)
+    if len(history_info) > 0:
+        history_info = history_info[0]
+        fname = history_info.fname_info.name
+        dirs = fname.split("/")
+        fname = "/".join(dirs[1:])
+        html = render(req, fname)
+        return HttpResponse(html)
+    else:
+        return HttpResponse("")
+
+
+
+def delete_model3d(req,id_model):
+    id_model = int(id_model)
+    model3d = Model3D.objects.get(id=id_model)
+    scene = Scene.objects.get(id=model3d.scene.id)
+    fname_json = PATH_JSON + scene.fname_json
+    data_scene = json.load(open(fname_json))
+    objmodels = data_scene["objmodels"]
+    houses = data_scene["houses"]
+    objmodels_new = []
+    houses_new = []
+    data_scene_new = {}
+
+    for i in range(len(objmodels)):
+        if objmodels[i]["id"] != model3d.id:
+            objmodels_new.append(objmodels[i])
+            houses_new.append(houses[i])
+    data_scene_new["objmodels"] = objmodels_new
+    data_scene_new["houses"] = houses_new
+
+    json.dump(data_scene_new, open(fname_json, "w"), ensure_ascii=False)
+    model3d.delete()
+    return HttpResponseRedirect("/")
+
+def list_models_on_scene(req,id_scene):
+    id_scene = int(id_scene)
+    scene = Scene.objects.get(id=id_scene)
+    models3d = Model3D.objects.filter(scene=scene)
+    html = render(req,"list_models_on_scene.html",{"scene":scene,"models3d":models3d})
+    return HttpResponse(html)
+
 
 
 

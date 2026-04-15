@@ -4,7 +4,7 @@
 {% endblock %}
 
 {% block header %}
-Список 3D  сцен
+<h2 align="center">Список 3D  сцен</h2>
 {% endblock %}
 
 {% block content %}
@@ -18,6 +18,11 @@
 <p>
     <a href="/manage/set_position/{{ scene.id }}">
         <button>Разместить на сцене модели</button>
+    </a>
+</p>
+<p>
+    <a href = "/manage/list_models_on_scene/{{ scene.id }}">
+        <button>Посмотреть список моделей для удаления со сцены</button>
     </a>
 </p>
 {% endfor %}

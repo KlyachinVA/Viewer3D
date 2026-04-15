@@ -18,7 +18,8 @@ from django.urls import path, re_path
 from loadmodels.views import main, upload_model3d, make_scene, make_envir,\
     upload_history_info, add_texture,show_start_menu, scene_list,\
     model_list, add_history_info, add_texture_to_model, set_position,\
-    view_scene, get_json_data
+    view_scene, get_json_data, get_history_info, delete_model3d,\
+    list_models_on_scene, list_scene_for_view
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -26,14 +27,18 @@ urlpatterns = [
     re_path('view_scene/([0-9]+)',view_scene),
     path('',show_start_menu),
     path('manage/upload_model3d/',upload_model3d),
+    re_path('manage/delete_model3d/([0-9]+)',delete_model3d),
     path('manage/make_scene/',make_scene),
     path('manage/make_environment/',make_envir),
     path('manage/upload_history_info/',upload_history_info),
     path('manage/add_texture/',add_texture),
     path('manage/scene_list/',scene_list),
+    path('list_scene_for_view/',list_scene_for_view),
     re_path('get_json_data/([a-z]+)',get_json_data),
+    re_path('get_history_info/([0-9]+)',get_history_info),
     re_path('manage/model_list/([0-9]+)',model_list),
     re_path('manage/add_history_info/([0-9]+)',add_history_info),
     re_path('manage/add_texture_to_model/([0-9]+)',add_texture_to_model),
-    re_path('manage/set_position/([0-9]+)',set_position)
+    re_path('manage/set_position/([0-9]+)',set_position),
+    re_path('manage/list_models_on_scene/([0-9]+)',list_models_on_scene)
 ]

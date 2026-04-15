@@ -41,6 +41,7 @@ export class ViewPort{
 		this.full_path = [];
 		
 		this.view={
+		mouse_down: false,
 		rotationY:0,
 		pZ: 0,
 		positionX: 0,
@@ -109,19 +110,19 @@ export class ViewPort{
 			console.log("call-init")
 			this.first = false
 			
-			this.light = new THREE.PointLight(0xffffff, 5000,100)
+			this.light = new THREE.PointLight(0xffffff, 7000,100)
 			this.light.position.set(50, 40, 0.0)
 			this.light.castShadow = true
 			this.scene.add(this.light)
-			this.light = new THREE.PointLight(0xffffff, 1000)
+			this.light = new THREE.PointLight(0xffffff, 2000)
 			this.light.position.set(-30, 30, 0.0)
 			this.light.castShadow = true
 			this.scene.add(this.light)
-			this.light = new THREE.PointLight(0xffffff, 1000)
+			this.light = new THREE.PointLight(0xffffff, 2000)
 			this.light.position.set(0, 30, 30.0)
 			this.light.castShadow = true
 			this.scene.add(this.light)
-			this.light = new THREE.PointLight(0xffffff, 1000)
+			this.light = new THREE.PointLight(0xffffff, 2000)
 			this.light.position.set(0, 30, -30.0)
 			this.light.castShadow = true
 			this.scene.add(this.light)
@@ -132,9 +133,33 @@ export class ViewPort{
 			this.light.shadow.mapSize.width = 512; // default
 			this.light.shadow.mapSize.height = 512; // default
 			this.light.shadow.camera.near = 0.5; // default
-			this.light.shadow.camera.far = 1000; 
+			this.light.shadow.camera.far = 7000;
 			this.light.shadow.radius = 10
 			this.light.shadow.blurSamples = 100
+		
+			const materials =[];
+
+			const loader = new THREE.CubeTextureLoader();
+			const images = ['/static/images/right1.png',
+			                '/static/images/left1.png',
+			                '/static/images/top1.png',
+			                '/static/images/down1.png',
+			                '/static/images/forward1.png',
+			                '/static/images/back1.png']; // имена изображений
+            const textures_sky = loader.load(images)
+			/*images.forEach((image, i) => {
+			    const texture =   loader.load(image);
+			    textures_sky.push(texture)
+			    materials.push(new THREE.MeshBasicMaterial({ map: texture, side: THREE.BackSide }));
+			});
+			*/
+			//const cube = new THREE.Mesh(new THREE.BoxGeometry(1400, 1400, 1400), materials);
+			//this.scene.add(cube);
+			this.scene.background = textures_sky
+		
+		
+		
+		
 		
 		
 			if(data.ambient_light){
@@ -167,10 +192,21 @@ export class ViewPort{
 			
 			this.element.appendChild( this.renderer.domElement );
 			//this.controls = new OrbitControls(this.camera, this.renderer.domElement)
-		
+			const loader_ground = new THREE.TextureLoader();
+		    let texture_ground =   loader_ground.load('/static/images/ground-8.jpg');
+		    const M = new THREE.Matrix3(16, 0, 0,
+                   0, 16, 0,
+                   0, 0, 16)
+
+            texture_ground.matrix = M
+            texture_ground.repeat = new THREE.Vector2( 64, 64 )
+            texture_ground.wrapS = THREE.RepeatWrapping
+            texture_ground.wrapT = THREE.RepeatWrapping
+		    let material = new THREE.MeshBasicMaterial({ map: texture_ground, side: THREE.DoubleSide })
+
 			const planeGeometry = new THREE.PlaneGeometry( 120, 120, 32, 32 );
 			const planeMaterial = new THREE.MeshStandardMaterial( { color: 0x00ff00 } )
-			const plane = new THREE.Mesh( planeGeometry, planeMaterial );
+			const plane = new THREE.Mesh( planeGeometry, material );
 			plane.receiveShadow = true;
 			plane.rotation.set(-3.14/2,0,0)
 			
@@ -309,7 +345,15 @@ handleKeyDown(event) {                             // клавиша нажат�
 			this.view.positionY = y;
 		}
 		else{
-			document.getElementById(this.view.hs_id[this.view.house]).style.display="block";
+		    let ind = this.view.house
+		    let id_model = this.obj_models[ind]["id"]
+		    let url = "/get_history_info/" + id_model
+
+		    fetch(url).then(response => response.text()).then(html => {
+		            document.getElementById('history_info').innerHTML = html
+		            })
+
+			document.getElementById('history_info').style.display="block";
 		}
 		this.view.direct_x +=  zoom*Math.sin(this.view.phi)*Math.cos(this.view.psi);
 		this.view.direct_y +=  zoom*Math.sin(this.view.psi);
@@ -331,11 +375,11 @@ handleKeyDown(event) {                             // клавиша нажат�
 		
 		if(event.keyCode == 32){//space
 		
-		document.getElementById(this.view.hs_id[this.view.house]).style.display="block";
+		document.getElementById('history_info').style.display="block";
 		
 		}
 		if(event.keyCode == 27){//esc
-		document.getElementById(this.view.hs_id[this.view.house]).style.display="none";
+		document.getElementById('history_info').style.display="none";
 		
 		}
 		
@@ -371,6 +415,7 @@ handleMouseMove(event){
 var event = event || window.event;
   //var ypos=event.clientY;
   //var xpos=event.clientX;
+  if(this.view.mouse_down == true){
   this.view.phi=-4*Math.PI*event.clientX/window.innerWidth;
   this.view.psi=Math.PI/2-Math.PI*event.clientY/window.innerHeight;
   if(this.view.start)
@@ -379,6 +424,17 @@ var event = event || window.event;
   this.view.direct_y = this.view.positionY + Math.sin(this.view.psi);
   this.view.direct_z = this.view.positionZ + Math.cos(this.view.phi)*Math.cos(this.view.psi);
   } 
+}
+}
+
+handleMouseDown(event){
+
+this.view.mouse_down = true;
+}
+
+handleMouseUp(event){
+
+this.view.mouse_down = false;
 }
 
 handleMouseWheel(event){

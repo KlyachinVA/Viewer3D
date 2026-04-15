@@ -20,6 +20,8 @@ function run(){
 	document.onkeydown=function(event){vp.handleKeyDown(event);};
 	let wprt = document.getElementById(id_viewport)
 	wprt.onmousemove=function(event){vp.handleMouseMove(event);};
+	wprt.onmousedown=function(event){vp.handleMouseDown(event);};
+	wprt.onmouseup=function(event){vp.handleMouseUp(event);};
 	wprt.addEventListener('wheel', function(event){vp.handleMouseWheel(event);});
 	
 	let strt = document.getElementById("btn_start");

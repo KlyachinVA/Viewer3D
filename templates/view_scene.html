@@ -6,8 +6,11 @@
         <link href="/static/css/menu.css" rel="stylesheet">
         <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css">
 		<style>
+            h4{
+	            color:#0000ff;
+            }
 			h2{
-				color:#0099aa;
+				color:#000000;
 				}
 			body { margin: 0; }
 			#viewport{
@@ -54,22 +57,23 @@
 			position:absolute;
 			margin-left:10px;
 			top:180px;
-			width:500px;
-			height:500px;
-			background-color:#ffaa88;
-			opacity: 0.85;
+			width : 30em;
+			background-color:#333333;
+			font-family: sans-serif;
+			opacity: 0.9;
 			display:none;
 			border-radius: 20px;
+			color : white;
 			}
 			#start{
 			position:absolute;
 			margin-left:25px;
 			top:200px;
-			width:1380px;
-			height:700px;
-			background-color:#ffaa88;
-			opacity: 0.65;
+			width:50em;
+			background-color:#333333;
+			opacity: 0.9;
 			display:none;
+			color:white;
 			border-radius: 60px;
 			}
 		</style>
@@ -129,7 +133,7 @@
 		<!--<script type="module" src="/fbx.js"></script>-->
     <a href="/"><i class="fas fa-home icon"></i></a>
 	<div align="center">
-		<h2>Просмотр 3D  моделей</h2>
+		<h2>Просмотр экскурсии</h2>
 		<button id="run">ЗАГРУЗИТЬ</button>
 		<button id="clear">ОЧИСТИТЬ</button>
 		<button id="btn_start">СТАРТ</button>
@@ -146,12 +150,13 @@
 	</div>
 	<div id="inf" class="inf"></div>
 	<div id="hotel" class="inf"></div>
+    <div id="history_info" class="inf"></div>
 	<div id="start" ></div>
-	<div id="viewport2" style="position:static; display:none;">
+	<!--<div id="viewport2" style="position:static; display:none;">
 		<button onclick="hide_dialog('viewport2')">X</button>
 
-		<!--<canvas id="view_port" width=500 height=500></canvas>-->
-	</div>
+		<canvas id="view_port" width=500 height=500></canvas>
+	</div>-->
 
 
 	<div id="info" style="display:none">
