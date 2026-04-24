@@ -49,8 +49,8 @@ function exec(){
 	let btn = document.getElementById("run")
 	btn.onclick=run
 	
-	let btn_clr = document.getElementById("clear")
-	btn_clr.onclick=clr
+	/*let btn_clr = document.getElementById("clear")
+	btn_clr.onclick=clr*/
 	}
 exec()
 

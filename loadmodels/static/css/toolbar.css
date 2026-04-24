@@ -5,24 +5,21 @@ body {
 
 .Toolbar {
     float: left;
-    font-family: 'Trebuchet MS';
-    font-size: 14px;
-    font-variant: small-caps;
+    font-family: 'Roboto', sans-serif;
+    padding: 20px;
+    color : #FFFFFF;
+    font-size : 1.2em;
+    background-color : #1E2B32;
+    border-radius: 10px 10px;
     text-align: center;
-    background: #ffffff;
-    padding: 10px 15px 3px 10px;
-    margin-bottom: 1px;
-    margin-right: 1px;
-    border: 1px solid #7B899B;
+
 }
 
 .Toolbar button {
-    padding: 6px;
-    margin: 7px 2px;
-    font-variant: normal;
-    font-size: 18px;
-    border : 0;
-    background-color : #88aaff;
+    background-color : #eeeeee;
+    color : #323232;
+    font-size : 1.0em;
+    border-radius: 7px 7px;
 }
 
 

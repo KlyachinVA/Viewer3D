@@ -1,12 +1,12 @@
 
 @import url('https://fonts.googleapis.com/css?family=Roboto');
 h4{
-	color:#0000ff;
+	color:#000000;
 }
 
 .imit-forms{
     font-family: 'Roboto', sans-serif;
-    padding: 50px;
+    padding: 20px;
     color : #FFFFFF;
     font-size : 1.2em;
     background-color : #1E2B32;
@@ -17,7 +17,7 @@ h4{
 .imit-forms button{
     background-color : #eeeeee;
     color : #323232;
-    font-size : 1.0em;
+    font-size : 1.1em;
     border-radius: 7px 7px;
 }
 .imit-forms a{

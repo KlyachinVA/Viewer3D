@@ -253,6 +253,46 @@ async	load_3dobjmodels(mtlloader,objloader,scene,models,element,id_element){
 	clear(){
 		this.scene.clear()
 		}
+
+
+det_go(x,y,z){
+	var l12, d12 = 0;
+	var l23, d23 = 0;
+	var l34, d34 = 0;
+	var l41, d41 = 0;
+	var go_yes = true;
+	var eps = 0.5;
+	for(var hs = 0; hs < this.map_json.length; hs++)
+		{
+			d12 = (z-this.map_json[hs]['z1'])*(this.map_json[hs]['x2']-this.map_json[hs]['x1'])-(x-this.map_json[hs]['x1'])*(this.map_json[hs]['z2']-this.map_json[hs]['z1']);
+			l12 = (this.map_json[hs]['x2']-this.map_json[hs]['x1'])*(this.map_json[hs]['x2']-this.map_json[hs]['x1']);
+			l12 = l12 + (this.map_json[hs]['z2']-this.map_json[hs]['z1'])*(this.map_json[hs]['z2']-this.map_json[hs]['z1']);
+			l12 = Math.sqrt(l12);
+			d23 = (z-this.map_json[hs]['z2'])*(this.map_json[hs]['x3']-this.map_json[hs]['x2'])-(x-this.map_json[hs]['x2'])*(this.map_json[hs]['z3']-this.map_json[hs]['z2']);
+			l23 = (this.map_json[hs]['x3']-this.map_json[hs]['x2'])*(this.map_json[hs]['x3']-this.map_json[hs]['x2']);
+			l23 = l12 + (this.map_json[hs]['z3']-this.map_json[hs]['z2'])*(this.map_json[hs]['z3']-this.map_json[hs]['z2']);
+			l23 = Math.sqrt(l23);
+			d34 = (z-this.map_json[hs]['z3'])*(this.map_json[hs]['x4']-this.map_json[hs]['x3'])-(x-this.map_json[hs]['x3'])*(this.map_json[hs]['z4']-this.map_json[hs]['z3']);
+			l34 = (this.map_json[hs]['x4']-this.map_json[hs]['x3'])*(this.map_json[hs]['x4']-this.map_json[hs]['x3']);
+			l34 = l12 + (this.map_json[hs]['z4']-this.map_json[hs]['z3'])*(this.map_json[hs]['z4']-this.map_json[hs]['z3']);
+			l34 = Math.sqrt(l34);
+			d41 = (z-this.map_json[hs]['z4'])*(this.map_json[hs]['x1']-this.map_json[hs]['x4'])-(x-this.map_json[hs]['x4'])*(this.map_json[hs]['z1']-this.map_json[hs]['z4']);
+			l41 = (this.map_json[hs]['x1']-this.map_json[hs]['x4'])*(this.map_json[hs]['x1']-this.map_json[hs]['x4']);
+			l41 = l12 + (this.map_json[hs]['z1']-this.map_json[hs]['z4'])*(this.map_json[hs]['z1']-this.map_json[hs]['z4']);
+			l41 = Math.sqrt(l41);
+			d12 = d12/l12;
+			d23 = d23/l23;
+			d34 = d34/l34;
+			d41 = d41/l41;
+			let out_neibour_left = ((d12>eps)||(d23>eps)||(d34>eps)||(d41>eps)||(y>this.map_json[hs]['H'] + eps))
+			let out_neibour_right = ((d12<eps)||(d23<eps)||(d34<eps)||(d41<eps)||(y>this.map_json[hs]['H'] + eps))
+			go_yes = go_yes && ( out_neibour_left && out_neibour_right );
+			if(! out_neibour_right || ! out_neibour_left){this.view.house = hs; console.log("hs=",hs)}
+			
+		}
+	return go_yes;
+	
+}
 	
 handleKeyDown(event) {                             // клавиша нажата
         //var phi = 1;
@@ -292,24 +332,17 @@ handleKeyDown(event) {                             // клавиша нажат�
 		console.log("start:", this.view.start);
 		console.log("house:", this.view.hs_id[this.view.house], this.map_json.length);
 		console.log("models:", this.obj_models);
+		console.log("house-all:", this.map_json);
 		
         }
 		
 		if(event.keyCode == 83){
-		go_yes = true;
+		
 		z = this.view.positionZ - zoom*Math.cos(this.view.phi)*Math.cos(this.view.psi);
 		x = this.view.positionX - zoom*Math.sin(this.view.phi)*Math.cos(this.view.psi);
 		y = this.view.positionY - zoom*Math.sin(this.view.psi);
-		for(var hs = 0; hs < this.map_json.length; hs++)
-		{
-			d12 = (z-this.map_json[hs]['z1'])*(this.map_json[hs]['x2']-this.map_json[hs]['x1'])-(x-this.map_json[hs]['x1'])*(this.map_json[hs]['z2']-this.map_json[hs]['z1']);
-			d23 = (z-this.map_json[hs]['z2'])*(this.map_json[hs]['x3']-this.map_json[hs]['x2'])-(x-this.map_json[hs]['x2'])*(this.map_json[hs]['z3']-this.map_json[hs]['z2']);
-			d34 = (z-this.map_json[hs]['z3'])*(this.map_json[hs]['x4']-this.map_json[hs]['x3'])-(x-this.map_json[hs]['x3'])*(this.map_json[hs]['z4']-this.map_json[hs]['z3']);
-			d41 = (z-this.map_json[hs]['z4'])*(this.map_json[hs]['x1']-this.map_json[hs]['x4'])-(x-this.map_json[hs]['x4'])*(this.map_json[hs]['z1']-this.map_json[hs]['z4']);
-			go_yes = go_yes && (((d12>2)||(d23>2)||(d34>2)||(d41>1)||(y>this.map_json[hs]['H'] + 2)) && (this.view.positionY > 1));
-			//if(!((d12>2)||(d23>2)||(d34>2)||(d41>1)||(y>this.map_json[hs]['H'] + 2))){this.view.house = hs;}
-			
-		}
+		
+		go_yes = this.det_go(x,y,z);
 		if(go_yes)
 		{
 			this.view.positionZ = z;
@@ -324,28 +357,23 @@ handleKeyDown(event) {                             // клавиша нажат�
 		
 		
 		if(event.keyCode == 87){
-		go_yes = true;
+		
 		z = this.view.positionZ + zoom*Math.cos(this.view.phi)*Math.cos(this.view.psi);
 		x = this.view.positionX + zoom*Math.sin(this.view.phi)*Math.cos(this.view.psi);
 		y = this.view.positionY + zoom*Math.sin(this.view.psi);
-		for(var hs = 0; hs < this.map_json.length; hs++)
-		{
-			d12 = (z-this.map_json[hs]['z1'])*(this.map_json[hs]['x2']-this.map_json[hs]['x1'])-(x-this.map_json[hs]['x1'])*(this.map_json[hs]['z2']-this.map_json[hs]['z1']);
-			d23 = (z-this.map_json[hs]['z2'])*(this.map_json[hs]['x3']-this.map_json[hs]['x2'])-(x-this.map_json[hs]['x2'])*(this.map_json[hs]['z3']-this.map_json[hs]['z2']);
-			d34 = (z-this.map_json[hs]['z3'])*(this.map_json[hs]['x4']-this.map_json[hs]['x3'])-(x-this.map_json[hs]['x3'])*(this.map_json[hs]['z4']-this.map_json[hs]['z3']);
-			d41 = (z-this.map_json[hs]['z4'])*(this.map_json[hs]['x1']-this.map_json[hs]['x4'])-(x-this.map_json[hs]['x4'])*(this.map_json[hs]['z1']-this.map_json[hs]['z4']);
-			go_yes = go_yes && (((d12>2)||(d23>2)||(d34>2)||(d41>1)||(y>this.map_json[hs]['H'] + 2)) && (this.view.positionY > 1));
-			if(!((d12>2)||(d23>2)||(d34>2)||(d41>1)||(y>this.map_json[hs]['H'] + 2))){this.view.house = hs;}// определяем номер здания, 
-			                                                                                                // которое оказалось на пути камеры
-		}
-		if(go_yes)
+		
+		go_yes = this.det_go(x,y,z);
+		
+		if(go_yes && this.view.positionY > 0)
 		{
 			this.view.positionZ = z;
 			this.view.positionX = x;
 			this.view.positionY = y;
 		}
 		else{
+			if(this.view.positionY > 0){
 		    let ind = this.view.house
+		    console.log('ind=',ind)
 		    let id_model = this.obj_models[ind]["id"]
 		    let url = "/get_history_info/" + id_model
 
@@ -354,12 +382,13 @@ handleKeyDown(event) {                             // клавиша нажат�
 		            })
 
 			document.getElementById('history_info').style.display="block";
+			}
 		}
 		this.view.direct_x +=  zoom*Math.sin(this.view.phi)*Math.cos(this.view.psi);
 		this.view.direct_y +=  zoom*Math.sin(this.view.psi);
 		this.view.direct_z +=  zoom*Math.cos(this.view.phi)*Math.cos(this.view.psi);
         }
-		if(event.keyCode == 189 && this.view.positionY > 1){
+		if(event.keyCode == 189 && this.view.positionY > 0){
 		
 		this.view.positionY -= shag_up;
 		this.view.direct_y  -= shag_up;		

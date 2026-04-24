@@ -1,5 +1,5 @@
 import re
-
+import cv2 as cv
 from django.shortcuts import render
 from django.http import HttpResponse, HttpResponseRedirect
 from django.contrib.auth.decorators import login_required
@@ -214,6 +214,8 @@ def set_position(req,id_scene):
     else:
         id_scene = int(id_scene)
         scene = Scene.objects.get(id=id_scene)
+        fname_map_image = scene.map_image.name
+        img = cv.imread(fname_map_image)
         id_model = int(req.POST["model3d"])
         model3d = Model3D.objects.get(id=id_model)
         box3d = Model3DSize.objects.filter(model3d=model3d)[0]
@@ -242,8 +244,12 @@ def set_position(req,id_scene):
 
         X = np.array(X)
         Y = np.array(Y)
-        W = 1000
-        H = 620
+        Lengths = (X[1:] - X[:-1])**2 + (Y[1:] - Y[:-1])**2
+        k = np.argmax(Lengths)
+        theta = np.arcsin((Y[k+1] - Y[k])/np.sqrt(Lengths[k]))
+
+        W = img.shape[1]
+        H = img.shape[0]
         cx = (X - W/2).mean()
         cy = (Y - H/2).mean()
 
@@ -269,8 +275,9 @@ def set_position(req,id_scene):
 
         dx = max(x1,x2,x3,x4) - min(x1,x2,x3,x4)
         dz = max(z1,z2,z3,z4) - min(z1,z2,z3,z4)
-        kx = L/dx
-        kz = Ws/dz
+        dec = 2.5
+        kx = dec * L/dx
+        kz = dec * Ws/dz
 
         x1 = (x1 - cx) * kx + cx
         x2 = (x2 - cx) * kx + cx
@@ -293,6 +300,7 @@ def set_position(req,id_scene):
             if objmodels[i]["id"] == model3d.id:
                 data_model = objmodels[i]
                 data_model["position"] = [cx,0,cy]
+                data_model["rotation"] = [0,theta,0]
                 data_model["rect"] = {"z1": z1, "x1": x1,
                                       "z2": z2, "x2": x2,
                                       "z3": z3, "x3": x3,
