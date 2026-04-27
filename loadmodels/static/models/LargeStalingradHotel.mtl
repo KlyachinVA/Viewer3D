@@ -41,6 +41,26 @@ Ni 1.500000
 d 1.000000
 illum 2
 
+newmtl Material.005
+Ns 250.000000
+Ka 1.000000 1.000000 1.000000
+Kd 0.015909 0.015909 0.015909
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.500000
+d 1.000000
+illum 2
+
+newmtl Material.006
+Ns 1000.000000
+Ka 1.000000 1.000000 1.000000
+Kd 0.800007 0.791090 0.003297
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.500000
+d 1.000000
+illum 2
+
 newmtl Material.011
 Ns 250.000000
 Ka 1.000000 1.000000 1.000000
@@ -219,7 +239,7 @@ Ke 0.000000 0.000000 0.000000
 Ni 1.500000
 d 1.000000
 illum 2
-map_Kd -s 16 16 1 textures/blue-dark.jpeg
+map_Kd -s 2 2 1 textures/гранит-серый.jpg
 
 newmtl dark-wall
 Ns 250.000000
@@ -250,6 +270,16 @@ Ni 1.500000
 d 1.000000
 illum 2
 map_Kd textures/glass.jpg
+
+newmtl grass
+Ns 0.000000
+Ka 1.000000 1.000000 1.000000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.500000
+d 1.000000
+illum 2
+map_Kd -s 64 48 1 textures/трава3.jpg
 
 newmtl ground
 Ns 0.000000
@@ -319,7 +349,7 @@ Ke 0.000000 0.000000 0.000000
 Ni 1.500000
 d 1.000000
 illum 2
-map_Kd -s 16 16 1 textures/yellow-wall-stucci.jpg
+map_Kd -s 3 3 1 textures/grey-wall.jpg
 
 newmtl дверь
 Ns 0.000000
@@ -329,7 +359,7 @@ Ke 0.000000 0.000000 0.000000
 Ni 1.450000
 d 1.000000
 illum 3
-map_Kd -s 1 3 1 textures/wood-2.jpg
+map_Kd -s 15.899999 8.2 1 textures/wood-2.jpg
 
 newmtl навес
 Ns 0.000000

@@ -20,7 +20,7 @@ Ke 0.000000 0.000000 0.000000
 Ni 1.000000
 d 1.000000
 illum 2
-map_Kd -s 16 16 1 textures/glass.jpg
+map_Kd -s 8 16 1 textures/glass.jpg
 
 newmtl Material.002
 Ns 250.000000

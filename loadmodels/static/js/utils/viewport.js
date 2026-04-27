@@ -45,8 +45,8 @@ export class ViewPort{
 		rotationY:0,
 		pZ: 0,
 		positionX: 0,
-		positionY: 10,
-		positionZ: -80,
+		positionY: 1,
+		positionZ: -50,
 		moveX: 0,
 		moveY: 0,
 		moveZ: 0,
@@ -111,19 +111,19 @@ export class ViewPort{
 			this.first = false
 			
 			this.light = new THREE.PointLight(0xffffff, 7000,100)
-			this.light.position.set(50, 40, 0.0)
+			this.light.position.set(40, 40, 0.0)
 			this.light.castShadow = true
 			this.scene.add(this.light)
-			this.light = new THREE.PointLight(0xffffff, 2000)
-			this.light.position.set(-30, 30, 0.0)
+			this.light = new THREE.PointLight(0xffffff, 7000)
+			this.light.position.set(-40, 30, 0.0)
 			this.light.castShadow = true
 			this.scene.add(this.light)
-			this.light = new THREE.PointLight(0xffffff, 2000)
-			this.light.position.set(0, 30, 30.0)
+			this.light = new THREE.PointLight(0xffffff, 7000)
+			this.light.position.set(0, 30, 40.0)
 			this.light.castShadow = true
 			this.scene.add(this.light)
-			this.light = new THREE.PointLight(0xffffff, 2000)
-			this.light.position.set(0, 30, -30.0)
+			this.light = new THREE.PointLight(0xffffff, 7000)
+			this.light.position.set(0, 30, -40.0)
 			this.light.castShadow = true
 			this.scene.add(this.light)
 		
@@ -140,12 +140,12 @@ export class ViewPort{
 			const materials =[];
 
 			const loader = new THREE.CubeTextureLoader();
-			const images = ['/static/images/right1.png',
-			                '/static/images/left1.png',
-			                '/static/images/top1.png',
-			                '/static/images/down1.png',
-			                '/static/images/forward1.png',
-			                '/static/images/back1.png']; // имена изображений
+			const images = ['/static/images/right2.png',
+			                '/static/images/left2.png',
+			                '/static/images/top2.png',
+			                '/static/images/down2.png',
+			                '/static/images/forward2.png',
+			                '/static/images/back2.png']; // имена изображений
             const textures_sky = loader.load(images)
 			/*images.forEach((image, i) => {
 			    const texture =   loader.load(image);

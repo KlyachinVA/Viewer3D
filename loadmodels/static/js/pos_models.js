@@ -104,6 +104,7 @@ function init_data(){
 
         curModelIndex = ind
         console.log(curModelIndex)
+        redraw()
 
     })
 }
@@ -158,7 +159,32 @@ function changeThickness (thickness, imgElement)
 	previousThicknessElement = imgElement;
 }
 
+function draw_selected(){
+    let color = 'rgba(' + 255 + ',' + 0 + ',' + 0 + ')';
+    console.log("selected index = ",curModelIndex)
+    let XX = data[curModelIndex]["X"]
+    let YY = data[curModelIndex]["Y"]
+	let rad = 7
+    let Xcenter = 0
+    let Ycenter = 0
+	for(let i in XX){
+	    Xcenter += XX[i]
+	    Ycenter += YY[i]
+	}
+	Xcenter /= XX.length
+	Ycenter /= YY.length
+	context.beginPath();
+    context.arc(x0 + Xcenter, y0 + Ycenter, rad, 0, 2 * Math.PI);
+    context.fillStyle = color;
+    //context.strokeStyle = color
+    context.fill();
+    context.closePath();
 
+
+
+	//console.log(AX[curpolygon]);
+
+}
 function closed(){
 
     let color = 'rgba(' + r + ',' + g + ',' + b + ', 0.3)';
@@ -195,6 +221,7 @@ function closed(){
 	//AY.push(new Array());
 	//console.log(coords);
 	console.log(data)
+	redraw()
 }
 
 
@@ -307,6 +334,7 @@ function redraw(){
 	context2.stroke();
 
 	draw_marks();
+	draw_selected()
 
 
 }

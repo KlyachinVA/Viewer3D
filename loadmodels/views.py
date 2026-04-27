@@ -1,5 +1,6 @@
 import re
 import cv2 as cv
+import os
 from django.shortcuts import render
 from django.http import HttpResponse, HttpResponseRedirect
 from django.contrib.auth.decorators import login_required
@@ -365,6 +366,8 @@ def delete_model3d(req,id_model):
     data_scene_new["houses"] = houses_new
 
     json.dump(data_scene_new, open(fname_json, "w"), ensure_ascii=False)
+    os.remove(model3d.fname.name)
+    os.remove(model3d.fname_mtl.name)
     model3d.delete()
     return HttpResponseRedirect("/")
 
